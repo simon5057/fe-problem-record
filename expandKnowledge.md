@@ -9,3 +9,8 @@
 - 解决方案：
   - 将外部的元素from换成其他元素，如div
   - 在button点击事件中阻止默认行为，e.preventDefault()
+
+#### [2020-6-22] 跨域XHR请求set-cookie不生效
+- 在发送到其他域的XMLHttpRequest之前，需要设置`withCredentials`为true，这时在response中的cookie才能设置成功
+  - [jQuery中ajax中配置xhrFields](https://jquery.cuishifeng.cn/jQuery.Ajax.html)
+  - [MDN Web docs](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/withCredentials)
