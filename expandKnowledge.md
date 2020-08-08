@@ -14,3 +14,15 @@
 - 在发送到其他域的XMLHttpRequest之前，需要设置`withCredentials`为true，这时在response中的cookie才能设置成功
   - [jQuery中ajax中配置xhrFields](https://jquery.cuishifeng.cn/jQuery.Ajax.html)
   - [MDN Web docs](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/withCredentials)
+
+#### [2020-8-8] CDN 缓存问题
+- 问题描述：
+  - 现象：在用户信息页中，展示的是非当前登录用户的信息，如绑定手机号、邮箱等
+  - 分析原因：该用户为境外用户，判断为该页面 CDN 缓存策略有误
+  - 复现场景：由于用户为境外用户，通过代理到境外后访问目标页面时复现
+- 解决方案：
+  - 通过添加缓存策略 `<meta http-equiv="Cache-Control" content="private">`，其含义为中继服务器不得缓存该请求，只能被单个用户缓存（未解决）
+    - 未解决原因猜测有：
+      - CDN 未按规则实现或隐形代理服务器仍进行了缓存
+      - `Pragma: no-cache` 和 `Cache-Control: no-cache` 未尝试添加
+  - 通过在访问目标页的路径中加上（如 `_t=1596617124716`）时间戳等信息，以保证每次请求地址唯一，每次请求都不会拿CDN缓存
